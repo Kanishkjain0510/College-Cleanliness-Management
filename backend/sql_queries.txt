@@ -1,0 +1,43 @@
+CREATE DATABASE JKLU_Cleanliness_Management;
+USE JKLU_Cleanliness_Management;
+
+CREATE TABLE USERS (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  name VARCHAR(100),
+  email VARCHAR(100) UNIQUE,
+  phone VARCHAR(15),
+  password VARCHAR(255),
+  user_type ENUM('student', 'admin', 'worker')
+);
+
+CREATE TABLE AREA (
+  area_id INT AUTO_INCREMENT PRIMARY KEY,
+  name VARCHAR(100),
+  type VARCHAR(50),
+  floor_number INT,
+  building VARCHAR(100)
+);
+
+CREATE TABLE CLEANLINESS_ISSUE (
+  issue_id INT AUTO_INCREMENT PRIMARY KEY,
+  area_id INT,
+  description TEXT,
+  reported_time DATETIME,
+  status ENUM('Pending', 'Resolved') DEFAULT 'Pending',
+  priority ENUM('Low', 'Medium', 'High'),
+  FOREIGN KEY (area_id) REFERENCES AREA(area_id)
+);
+
+CREATE TABLE TASK (
+  task_id INT AUTO_INCREMENT PRIMARY KEY,
+  description TEXT,
+  scheduled_time DATETIME,
+  status_id INT DEFAULT 1
+);
+
+CREATE TABLE INVENTORY (
+  item_id INT AUTO_INCREMENT PRIMARY KEY,
+  name VARCHAR(100),
+  current_quantity INT,
+  minimum_threshold INT
+);
